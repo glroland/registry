@@ -28,7 +28,10 @@ RUN git clone https://github.com/devfile/registry-support.git /registry-support
 
 # Run the registry build tools
 RUN /registry-support/build-tools/build.sh /registry /build
+RUN chown -R 1001:0 /registry
+RUN chown -R 1001:0 /build
 
-FROM quay.io/devfile/devfile-index-base:next
+FROM registry.home.glroland.com/paas/registry-base:latest
 
 COPY --from=builder /build /registry
+
